@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/atotto/clipboard"
-	"github.com/xh-dev/webclip-client/weblcip"
+	wc "github.com/xh-dev/webclip-client"
 	"os"
 	"strconv"
 	"strings"
@@ -44,7 +44,7 @@ func main() {
 		} else {
 			msg = strings.Join(flag.Args(), " ")
 		}
-		code, err = weblcip.SendMessage(msg, host+"/api")
+		code, err = wc.SendMessage(msg, host+"/api")
 		if err != nil {
 			panic(err)
 		}
@@ -68,7 +68,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		msg, err := weblcip.RetriveMessage(retriveCode, host+"/api")
+		msg, err := wc.RetriveMessage(retriveCode, host+"/api")
 		if err != nil {
 			panic(err)
 		}

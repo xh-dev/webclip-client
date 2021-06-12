@@ -1,4 +1,4 @@
-package weblcip
+package webclip
 
 import (
 	"bytes"
