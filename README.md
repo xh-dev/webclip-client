@@ -22,5 +22,5 @@ curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c306
 curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/amd64/webclip --output webclip && chmod +x webclip
 ```
 
-## [win - 386](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/amd64/webclip)
-## [win - amd64](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/amd64/webclip)
+## [win - 386](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/win/386/webclip.exe)
+## [win - amd64](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/win/amd64/webclip.exe)
