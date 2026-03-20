@@ -19,7 +19,7 @@ var fromClip bool
 
 func main() {
 	flag.StringVar(&action, "action", "none", "send - send a message\nretrive - retrive a message")
-	flag.StringVar(&host, "host", "https://webclip2.mytools.express", "url posting \n\tsend - /msg/create\n\tretrive - /msg/retrive")
+	flag.StringVar(&host, "host", "https://webclip.webutils.space", "url posting \n\tsend - /msg/create\n\tretrive - /msg/retrive")
 	flag.BoolVar(&outUrl, "asUrl", false, "[mode==send] export result as the retrive url")
 	flag.BoolVar(&fromClip, "ic", false, "[mode==send] input msg from clipboard")
 	flag.BoolVar(&toClip, "oc", false, "also output result to clipboard")
