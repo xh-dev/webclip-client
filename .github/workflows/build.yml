@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Cross-compile all targets
+        run: sh ./build.sh
+
+      - name: Store executables
+        uses: actions/upload-artifact@v4
+        with:
+          name: webclip-${{ github.sha }}
+          path: build/
+          if-no-files-found: error
