@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Cross-compile all targets
+        run: sh ./build.sh
+
+      - name: Package executables
+        run: |
+          mkdir dist
+          for f in build/linux/*/webclip; do
+            arch=$(basename "$(dirname "$f")")
+            cp "$f" "dist/webclip-linux-$arch"
+          done
+          for f in build/win/*/webclip.exe; do
+            arch=$(basename "$(dirname "$f")")
+            cp "$f" "dist/webclip-win-$arch.exe"
+          done
+          cd dist
+          sha256sum * > checksums.txt
+          tar -czf ../webclip-${{ github.event.release.tag_name }}.tar.gz *
+          cd ..
+          sha256sum webclip-${{ github.event.release.tag_name }}.tar.gz > webclip-${{ github.event.release.tag_name }}.tar.gz.sha256
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" \
+            dist/* \
+            webclip-${{ github.event.release.tag_name }}.tar.gz \
+            webclip-${{ github.event.release.tag_name }}.tar.gz.sha256 \
+            --clobber

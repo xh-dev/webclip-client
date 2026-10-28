@@ -8,26 +8,28 @@ Sending a message returns a numeric **id** and a 3-letter uppercase **secret**. 
 
 ### linux - arm
 ```sh
-curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/arm/webclip --output webclip && chmod +x webclip
+curl -L https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-linux-arm --output webclip && chmod +x webclip
 ```
 
 ### linux - arm64
 ```sh
-curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/arm64/webclip --output webclip && chmod +x webclip
+curl -L https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-linux-arm64 --output webclip && chmod +x webclip
 ```
 
 ### linux - 386
 ```sh
-curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/386/webclip --output webclip && chmod +x webclip
+curl -L https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-linux-386 --output webclip && chmod +x webclip
 ```
 
 ### linux - amd64
 ```sh
-curl https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/linux/amd64/webclip --output webclip && chmod +x webclip
+curl -L https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-linux-amd64 --output webclip && chmod +x webclip
 ```
 
-### [win - 386](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/win/386/webclip.exe)
-### [win - amd64](https://raw.githubusercontent.com/xh-dev/webclip-client/e83fa69af26ac91c3068a8edb0c482ca3a4062e2/build/win/amd64/webclip.exe)
+### [win - 386](https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-win-386.exe)
+### [win - amd64](https://github.com/xh-dev/webclip-client/releases/latest/download/webclip-win-amd64.exe)
+
+Each release also ships `checksums.txt` (SHA-256) and a `.tar.gz` archive with its `.sha256` file; verify with `sha256sum -c checksums.txt`.
 
 ## Usage
 
