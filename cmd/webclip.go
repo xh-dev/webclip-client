@@ -7,7 +7,6 @@ import (
 	"github.com/atotto/clipboard"
 	wc "github.com/xh-dev/webclip-client"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -44,31 +43,31 @@ func main() {
 		} else {
 			msg = strings.Join(flag.Args(), " ")
 		}
-		code, err = wc.SendMessage(msg, host+"/api")
+		var secret string
+		code, secret, err = wc.SendMessage(msg, host+"/api")
 		if err != nil {
 			panic(err)
 		}
 		
 		var o string
 		if outUrl{
-			o = host+"/#/get?id="+code
+			o = host+"/#/get?id="+code+"&secret="+secret
 			print(o)
 			if toClip {
 				clipboard.WriteAll(o)
 			}
 		}else{
-			o = code
+			o = code + " " + secret
 			print(o)
 			if toClip {
 				clipboard.WriteAll(o)
 			}
 		}
 	case "retrive":
-		retriveCode, err := strconv.Atoi(strings.Join(flag.Args(), " "))
-		if err != nil {
-			panic(err)
+		if flag.NArg() != 2 {
+			panic(errors.New("usage: -action retrive <code> <secret>"))
 		}
-		msg, err := wc.RetriveMessage(retriveCode, host+"/api")
+		msg, err := wc.RetriveMessage(flag.Arg(0), flag.Arg(1), host+"/api")
 		if err != nil {
 			panic(err)
 		}
