@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func SendMessage(msg string, host string) (string, error) {
+func SendMessage(msg string, host string) (string, string, error) {
 	url := host + "/msg/create"
 
 	jString, err := json.Marshal(model.CreateMsg{
@@ -17,13 +17,13 @@ func SendMessage(msg string, host string) (string, error) {
 	})
 
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	// println(string(jString))
 
 	request, err := http.NewRequest("POST", url, bytes.NewBuffer(jString))
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	request.Header.Set("Content-Type", "application/json; charset=UTF-8")
@@ -32,31 +32,32 @@ func SendMessage(msg string, host string) (string, error) {
 	response, err := client.Do(request)
 
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	if response.StatusCode != 200 {
-		return "", errors.New("Status code: " + response.Status)
+		return "", "", errors.New("Status code: " + response.Status)
 	}
 
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	var r model.CreateMsgResponse
 	err = json.Unmarshal(body, &r)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	return r.Id, nil
+	return r.Id, r.Secret, nil
 }
 
-func RetriveMessage(code int, host string) (string, error) {
+func RetriveMessage(code string, secret string, host string) (string, error) {
 	url := host + "/msg/retrieve"
 	jString, err := json.Marshal(model.RetriveMsg{
-		Code: code,
+		Code:   code,
+		Secret: secret,
 	})
 
 	if err != nil {
