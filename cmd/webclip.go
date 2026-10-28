@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"errors"
 	"flag"
 	"fmt"
@@ -9,6 +10,9 @@ import (
 	"os"
 	"strings"
 )
+
+//go:embed version.txt
+var version string
 
 var action string
 var host string
@@ -22,11 +26,21 @@ func main() {
 	flag.BoolVar(&outUrl, "asUrl", false, "[mode==send] export result as the retrive url")
 	flag.BoolVar(&fromClip, "ic", false, "[mode==send] input msg from clipboard")
 	flag.BoolVar(&toClip, "oc", false, "also output result to clipboard")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "webclip version %s\n\n", strings.TrimSpace(version))
+		fmt.Fprintf(os.Stderr, "Usage:\n")
+		fmt.Fprintf(os.Stderr, "  %s -action send [-ic] [-asUrl] [-oc] [-host <url>] <message...>\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "      send a message (or read it from the clipboard with -ic);\n")
+		fmt.Fprintf(os.Stderr, "      prints \"<code> <secret>\", or the retrieve url with -asUrl\n")
+		fmt.Fprintf(os.Stderr, "  %s -action retrive [-oc] [-host <url>] <code> <secret>\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "      retrieve a message using the <code> and <secret> returned by send\n\n")
+		fmt.Fprintf(os.Stderr, "Options:\n")
+		flag.PrintDefaults()
+	}
 	flag.Parse()
 
 	if action == "none" {
-		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-		flag.PrintDefaults()
+		flag.Usage()
 		os.Exit(0)
 	}
 
